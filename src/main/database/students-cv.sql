@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `students_cv` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE  IF NOT EXISTS `students_cv` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `students_cv`;
--- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: students_cv
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version	8.0.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -79,7 +79,10 @@ DROP TABLE IF EXISTS `cvs`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `cvs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(200) NOT NULL,
   `file_name` varchar(100) NOT NULL,
+  `format` varchar(45) NOT NULL,
+  `time_insert` datetime NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `uid_idx` (`user_id`),
@@ -143,6 +146,7 @@ CREATE TABLE `users` (
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
+  `time_insert` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -154,7 +158,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'andreas','$2a$10$3.9Z9O3gh6G5srOBdZX2X.y7p8YJwEPVg30SeGtTbNeyDiJ3CxXv2',1),(2,'sotiris','$2a$10$tnIAFEF1TdlAmLHDT86HXeZiYv7MqBlylaQpOwsceiGS/kMgmXLtS',1);
+INSERT INTO `users` VALUES (1,'andreas','$2a$10$3.9Z9O3gh6G5srOBdZX2X.y7p8YJwEPVg30SeGtTbNeyDiJ3CxXv2',1,'0000-00-00 00:00:00'),(2,'sotiris','$2a$10$tnIAFEF1TdlAmLHDT86HXeZiYv7MqBlylaQpOwsceiGS/kMgmXLtS',1,'0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,6 +188,10 @@ LOCK TABLES `users_authorities` WRITE;
 INSERT INTO `users_authorities` VALUES (2,1),(1,2);
 /*!40000 ALTER TABLE `users_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'students_cv'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -194,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-01 22:31:43
+-- Dump completed on 2019-12-03  9:46:54
