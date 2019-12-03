@@ -79,9 +79,10 @@ DROP TABLE IF EXISTS `cvs`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `cvs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `path` varchar(200) NOT NULL,
   `file_name` varchar(100) NOT NULL,
-  `format` varchar(45) NOT NULL,
+  `file_download_uri` varchar(200) NOT NULL,
+  `file_type` varchar(45) NOT NULL,
+  `size` bigint(20) NOT NULL,
   `time_insert` datetime NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
@@ -158,7 +159,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'andreas','$2a$10$3.9Z9O3gh6G5srOBdZX2X.y7p8YJwEPVg30SeGtTbNeyDiJ3CxXv2',1,'0000-00-00 00:00:00'),(2,'sotiris','$2a$10$tnIAFEF1TdlAmLHDT86HXeZiYv7MqBlylaQpOwsceiGS/kMgmXLtS',1,'0000-00-00 00:00:00');
+INSERT INTO `users` VALUES (1,'andreas','$2a$10$3.9Z9O3gh6G5srOBdZX2X.y7p8YJwEPVg30SeGtTbNeyDiJ3CxXv2',1,'2019-03-16 15:09:17'),(2,'sotiris','$2a$10$tnIAFEF1TdlAmLHDT86HXeZiYv7MqBlylaQpOwsceiGS/kMgmXLtS',1,'2019-03-16 15:09:17');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03  9:46:54
+-- Dump completed on 2019-12-03 17:04:36
