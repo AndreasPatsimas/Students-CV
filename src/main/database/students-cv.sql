@@ -52,7 +52,7 @@ CREATE TABLE `companies` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `company_name` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `units` bigint(20) NOT NULL,
+  `units` bigint(20) DEFAULT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
@@ -115,8 +115,9 @@ CREATE TABLE `students` (
   `university_department` int(11) NOT NULL,
   `work_experience` tinyint(1) NOT NULL,
   `dob` date NOT NULL,
+  `description` varchar(550) DEFAULT NULL,
   `mobile_phone` bigint(20) DEFAULT NULL,
-  `pic` longblob,
+  `image_path` varchar(250) DEFAULT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
@@ -131,7 +132,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES (1,'sotirinio@hotmail.com','Sotiris','Patsimas',10,1,'1997-05-08',6970166692,NULL,2);
+INSERT INTO `students` VALUES (1,'sotirinio@hotmail.com','Sotiris','Patsimas',10,1,'1997-05-08',NULL,6970166692,NULL,2);
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 17:04:36
+-- Dump completed on 2019-12-13 16:30:51
