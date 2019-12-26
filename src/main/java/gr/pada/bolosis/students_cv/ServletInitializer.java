@@ -1,4 +1,4 @@
-package gr.pada.bolosis.studentscv;
+package gr.pada.bolosis.students_cv;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
