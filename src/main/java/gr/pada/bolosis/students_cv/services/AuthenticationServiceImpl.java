@@ -1,5 +1,6 @@
 package gr.pada.bolosis.students_cv.services;
 
+import gr.pada.bolosis.students_cv.domain.Student;
 import gr.pada.bolosis.students_cv.domain.User;
 import gr.pada.bolosis.students_cv.dto.*;
 import gr.pada.bolosis.students_cv.enums.*;
@@ -13,10 +14,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,6 +43,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    StudentRepository studentRepository;
+
     @Value("${email.address.from}")
     private String mailSender;
 
@@ -59,6 +65,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .jwt(jwt)
+                .username(userDetails.getUsername())
+                .authorities((List<GrantedAuthority>) userDetails.getAuthorities())
                 .authenticationStatus(AuthenticationStatus.AUTHENTICATION_SUCCEEDED)
                 .build();
     }
@@ -97,6 +105,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> user = userRepository.findByUsername(forgotPasswordRequest.getUsername());
 
         if(user.isPresent()){
+
+            validateEmail(user.get(), forgotPasswordRequest.getEmail());
 
             String alphanumeric = UUID.randomUUID().toString();
 
@@ -148,5 +158,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         sb.append("After succesful login, you can change your password as you prefer.");
 
         return sb.toString();
+    }
+
+    private boolean validateEmail(User user, String email){
+
+        Student student = studentRepository.findStudentByUserId(user.getId());
+
+        System.out.println("----------------------dhjlvhfjvddjlvdlvdl "+student.getEmail());
+
+        return false;
     }
 }

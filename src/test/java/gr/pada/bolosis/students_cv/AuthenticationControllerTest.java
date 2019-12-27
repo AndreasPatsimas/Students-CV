@@ -13,19 +13,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(properties = {"spring.application.name=AuthenticationControllerTest",
         "spring.jmx.default-domain=AuthenticationControllerTest"})
 public class AuthenticationControllerTest extends BasicWiremockTest {
 
-    private static final String USERNAME = "andreas";
+    private static final String USERNAME = "sotiris";
 
-    private static final String PASSWORD = "aris1914";
+    private static final String PASSWORD = "fenomeno";
 
-    private static final String WRONG_PASSWORD = "aris191";
+    private static final String WRONG_PASSWORD = "fenomen";
 
-    private static final String EMAIL = "andreas-patsim@hotmail.com";
+    private static final String EMAIL = "sotirinio@hotmail.com";
 
     @Test
     public void authenticateSuccess() throws Exception {
@@ -63,18 +62,17 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
                 .andExpect(content().contentType("application/json"));
     }
 
-    @Ignore
     @Test
     public void changePasswordSuccess() throws Exception {
 
         ChangePasswordRequest changePasswordRequest = ChangePasswordRequest.builder()
                 .username(USERNAME)
                 .oldPassword(PASSWORD)
-                .newPassword("aris")
+                .newPassword(PASSWORD)
                 .build();
 
         this.mockMvc.perform(
-                post(CONTEXT_PATH + "/changePassword").contextPath(CONTEXT_PATH)
+                post(CONTEXT_PATH + "/authenticate/changePassword").contextPath(CONTEXT_PATH)
                         .content(asJsonString(changePasswordRequest))
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
@@ -82,7 +80,6 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
-    @Ignore
     @Test
     public void forgotPasswordSuccess() throws Exception {
 
@@ -92,7 +89,7 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
                 .build();
 
         this.mockMvc.perform(
-                post(CONTEXT_PATH + "/forgotPassword").contextPath(CONTEXT_PATH)
+                post(CONTEXT_PATH + "/authenticate/forgotPassword").contextPath(CONTEXT_PATH)
                         .content(asJsonString(forgotPasswordRequest))
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
