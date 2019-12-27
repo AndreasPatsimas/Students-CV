@@ -2,8 +2,8 @@ package gr.pada.bolosis.students_cv.controllers;
 
 import gr.pada.bolosis.students_cv.dto.*;
 import gr.pada.bolosis.students_cv.enums.AuthenticationStatus;
-import gr.pada.bolosis.students_cv.exceptions.AuthenticationErrorResponse;
-import gr.pada.bolosis.students_cv.exceptions.AuthenticationFailedException;
+import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationErrorResponse;
+import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationFailedException;
 import gr.pada.bolosis.students_cv.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

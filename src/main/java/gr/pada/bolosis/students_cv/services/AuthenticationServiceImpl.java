@@ -3,7 +3,7 @@ package gr.pada.bolosis.students_cv.services;
 import gr.pada.bolosis.students_cv.domain.User;
 import gr.pada.bolosis.students_cv.dto.*;
 import gr.pada.bolosis.students_cv.enums.*;
-import gr.pada.bolosis.students_cv.exceptions.AuthenticationFailedException;
+import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationFailedException;
 import gr.pada.bolosis.students_cv.repositories.*;
 import gr.pada.bolosis.students_cv.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;

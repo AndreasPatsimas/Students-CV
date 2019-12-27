@@ -1,5 +1,7 @@
 package gr.pada.bolosis.students_cv.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +27,7 @@ public class StudentDto {
 
     private Long mobilePhone;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfbirth;
 
     private short department;
@@ -34,4 +37,6 @@ public class StudentDto {
     private String description;
 
     private String imagePath;
+
+    private CvDto cv;
 }

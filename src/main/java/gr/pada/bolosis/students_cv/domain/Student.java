@@ -45,6 +45,9 @@ public class Student {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "mobile_phone")
+    private Long mobilePhone;
+
     @Column(name = "image_path")
     private String imagePath;
 

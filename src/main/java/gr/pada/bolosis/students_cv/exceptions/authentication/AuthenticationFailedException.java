@@ -1,4 +1,4 @@
-package gr.pada.bolosis.students_cv.exceptions;
+package gr.pada.bolosis.students_cv.exceptions.authentication;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

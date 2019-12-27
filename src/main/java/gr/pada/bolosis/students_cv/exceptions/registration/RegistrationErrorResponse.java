@@ -1,6 +1,5 @@
-package gr.pada.bolosis.students_cv.exceptions;
+package gr.pada.bolosis.students_cv.exceptions.registration;
 
-import gr.pada.bolosis.students_cv.enums.AuthenticationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,13 +10,11 @@ import org.springframework.http.HttpStatus;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationErrorResponse {
+public class RegistrationErrorResponse {
 
     private int errorCode;
 
     private HttpStatus status;
 
     private String message;
-
-    private AuthenticationStatus authenticationStatus;
 }
