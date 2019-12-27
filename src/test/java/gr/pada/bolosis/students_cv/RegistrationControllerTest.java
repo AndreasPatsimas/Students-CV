@@ -75,6 +75,7 @@ public class RegistrationControllerTest extends BasicWiremockTest {
                 .andExpect(status().isCreated());
     }
 
+    @Ignore
     @Test
     public void createCompany() throws Exception {
 
