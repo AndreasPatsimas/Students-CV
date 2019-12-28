@@ -1,4 +1,4 @@
-package gr.pada.bolosis.students_cv.dto;
+package gr.pada.bolosis.students_cv.dto.authenticate;
 
 import gr.pada.bolosis.students_cv.enums.AuthenticationStatus;
 import lombok.AllArgsConstructor;

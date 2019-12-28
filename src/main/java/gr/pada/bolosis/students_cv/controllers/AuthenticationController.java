@@ -1,15 +1,12 @@
 package gr.pada.bolosis.students_cv.controllers;
 
-import gr.pada.bolosis.students_cv.dto.*;
+import gr.pada.bolosis.students_cv.dto.authenticate.*;
 import gr.pada.bolosis.students_cv.enums.AuthenticationStatus;
-import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationErrorResponse;
-import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationFailedException;
+import gr.pada.bolosis.students_cv.exceptions.authentication.*;
 import gr.pada.bolosis.students_cv.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://127.0.0.1:5501")

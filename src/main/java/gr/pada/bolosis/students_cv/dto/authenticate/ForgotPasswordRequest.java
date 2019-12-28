@@ -1,4 +1,4 @@
-package gr.pada.bolosis.students_cv.dto;
+package gr.pada.bolosis.students_cv.dto.authenticate;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -9,11 +9,9 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class ChangePasswordRequest {
+public class ForgotPasswordRequest {
 
     private String username;
 
-    private String oldPassword;
-
-    private String newPassword;
+    private String email;
 }

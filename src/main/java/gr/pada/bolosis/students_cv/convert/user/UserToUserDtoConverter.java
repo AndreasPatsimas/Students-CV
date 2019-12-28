@@ -1,4 +1,4 @@
-package gr.pada.bolosis.students_cv.convert;
+package gr.pada.bolosis.students_cv.convert.user;
 
 import gr.pada.bolosis.students_cv.domain.User;
 import gr.pada.bolosis.students_cv.dto.UserDto;

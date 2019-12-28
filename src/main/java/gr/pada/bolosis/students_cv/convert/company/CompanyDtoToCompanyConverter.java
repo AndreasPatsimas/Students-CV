@@ -1,9 +1,9 @@
-package gr.pada.bolosis.students_cv.convert;
+package gr.pada.bolosis.students_cv.convert.company;
 
 import gr.pada.bolosis.students_cv.domain.Authority;
-import gr.pada.bolosis.students_cv.domain.Student;
+import gr.pada.bolosis.students_cv.domain.Company;
 import gr.pada.bolosis.students_cv.domain.User;
-import gr.pada.bolosis.students_cv.dto.StudentDto;
+import gr.pada.bolosis.students_cv.dto.CompanyDto;
 import gr.pada.bolosis.students_cv.enums.AuthorityType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,21 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StudentDtoToStudentConverter implements Converter<StudentDto, Student> {
+public class CompanyDtoToCompanyConverter implements Converter<CompanyDto, Company> {
 
     @Override
-    public Student convert(StudentDto studentDto) {
-        return Student.builder()
-                .email(studentDto.getEmail())
-                .firstname(studentDto.getFirstname())
-                .lastname(studentDto.getLastname())
-                .department(studentDto.getDepartment())
-                .workExperience(studentDto.isWorkExperience() == true ? (short)1 : (short)0)
-                .birthday(studentDto.getDateOfbirth())
-                .description(studentDto.getDescription())
-                .mobilePhone(studentDto.getMobilePhone())
-                .imagePath(studentDto.getImagePath())
-                .user(buildUser(studentDto.getUsername(), studentDto.getPassword()))
+    public Company convert(CompanyDto companyDto) {
+
+        return Company.builder()
+                .email(companyDto.getEmail())
+                .companyName(companyDto.getCompanyName())
+                .units(companyDto.getUnits())
+                .logoPath(companyDto.getLogoPath())
+                .user(buildUser(companyDto.getUsername(), companyDto.getPassword()))
                 .build();
     }
 
@@ -50,8 +46,8 @@ public class StudentDtoToStudentConverter implements Converter<StudentDto, Stude
         List<Authority> authorities = new ArrayList<>();
 
         authorities.add(Authority.builder()
-                .id(1L)
-                .description(AuthorityType.ROLE_STUDENT.description())
+                .id(2L)
+                .description(AuthorityType.ROLE_COMPANY.description())
                 .build());
 
         return authorities;

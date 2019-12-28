@@ -3,7 +3,7 @@ package gr.pada.bolosis.students_cv.services;
 import gr.pada.bolosis.students_cv.domain.Company;
 import gr.pada.bolosis.students_cv.domain.Student;
 import gr.pada.bolosis.students_cv.domain.User;
-import gr.pada.bolosis.students_cv.dto.*;
+import gr.pada.bolosis.students_cv.dto.authenticate.*;
 import gr.pada.bolosis.students_cv.enums.*;
 import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationFailedException;
 import gr.pada.bolosis.students_cv.repositories.*;

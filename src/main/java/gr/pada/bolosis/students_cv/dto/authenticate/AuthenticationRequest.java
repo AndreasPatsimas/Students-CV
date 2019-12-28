@@ -1,4 +1,4 @@
-package gr.pada.bolosis.students_cv.dto;
+package gr.pada.bolosis.students_cv.dto.authenticate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

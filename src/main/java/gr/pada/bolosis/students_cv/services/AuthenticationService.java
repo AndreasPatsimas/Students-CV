@@ -1,6 +1,6 @@
 package gr.pada.bolosis.students_cv.services;
 
-import gr.pada.bolosis.students_cv.dto.*;
+import gr.pada.bolosis.students_cv.dto.authenticate.*;
 import org.springframework.stereotype.Service;
 
 @Service

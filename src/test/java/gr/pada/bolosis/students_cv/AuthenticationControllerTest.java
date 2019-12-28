@@ -1,6 +1,8 @@
 package gr.pada.bolosis.students_cv;
 
-import gr.pada.bolosis.students_cv.dto.*;
+import gr.pada.bolosis.students_cv.dto.authenticate.AuthenticationRequest;
+import gr.pada.bolosis.students_cv.dto.authenticate.ChangePasswordRequest;
+import gr.pada.bolosis.students_cv.dto.authenticate.ForgotPasswordRequest;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
