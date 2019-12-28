@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("http://127.0.0.1:5501")
 @RestController
 @Slf4j
 @RequestMapping(value = "/authenticate")

@@ -1,5 +1,6 @@
 package gr.pada.bolosis.students_cv.services;
 
+import gr.pada.bolosis.students_cv.domain.Company;
 import gr.pada.bolosis.students_cv.domain.Student;
 import gr.pada.bolosis.students_cv.domain.User;
 import gr.pada.bolosis.students_cv.dto.*;
@@ -45,6 +46,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    CompanyRepository companyRepository;
 
     @Value("${email.address.from}")
     private String mailSender;
@@ -106,21 +110,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         if(user.isPresent()){
 
-            validateEmail(user.get(), forgotPasswordRequest.getEmail());
+            if(validateEmail(user.get(), forgotPasswordRequest.getEmail())){
 
-            String alphanumeric = UUID.randomUUID().toString();
+                String alphanumeric = UUID.randomUUID().toString();
 
-            saveBcryptedPassword(alphanumeric, user.get());
+                saveBcryptedPassword(alphanumeric, user.get());
 
-            mailService.sendMessage(mailSender, forgotPasswordRequest.getEmail(), "New Password",
-                    emailText(alphanumeric));
+                mailService.sendMessage(mailSender, forgotPasswordRequest.getEmail(), "New Password",
+                        emailText(alphanumeric));
 
-            log.info("Forgot password processs completed");
+                log.info("Forgot password processs completed");
 
-            return ForgotPasswordResponse.builder()
-                    .forgotPasswordStatus(ForgotPasswordStatus.USERNAME_VERIFIED)
-                    .resetKeyPassword(alphanumeric)
-                    .build();
+                return ForgotPasswordResponse.builder()
+                        .forgotPasswordStatus(ForgotPasswordStatus.USERNAME_VERIFIED)
+                        .resetKeyPassword(alphanumeric)
+                        .build();
+            }
+            else
+                return ForgotPasswordResponse.builder()
+                        .forgotPasswordStatus(ForgotPasswordStatus.USERNAME_NOT_MATCH_WITH_EMAIL)
+                        .build();
         }
 
         return ForgotPasswordResponse.builder()
@@ -162,9 +171,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private boolean validateEmail(User user, String email){
 
-        Student student = studentRepository.findStudentByUserId(user.getId());
+        if(user.getAuthorities().get(0).getDescription().equals("ROLE_STUDENT")) {
 
-        System.out.println("----------------------dhjlvhfjvddjlvdlvdl "+student.getEmail());
+            Optional<Student> student = studentRepository.findStudentByUserId(user.getId());
+
+            if (student.isPresent() && student.get().getEmail().equals(email))
+                return true;
+
+        }
+        else if(user.getAuthorities().get(0).getDescription().equals("ROLE_COMPANY")){
+
+            Optional<Company> company = companyRepository.findCompanyByUserId(user.getId());
+
+            if(company.isPresent() && company.get().getEmail().equals(email))
+                return true;
+        }
 
         return false;
     }

@@ -80,6 +80,7 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
+    @Ignore
     @Test
     public void forgotPasswordSuccess() throws Exception {
 

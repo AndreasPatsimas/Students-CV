@@ -29,7 +29,7 @@ public class RegistrationController {
 
         registrationService.registerStudent(studentDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/company", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -39,7 +39,7 @@ public class RegistrationController {
 
         registrationService.registerCompany(companyDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(HttpStatus.CREATED);
     }
 
     @ExceptionHandler(RegistrationFailedException.class)
