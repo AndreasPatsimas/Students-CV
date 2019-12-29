@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.security.Principal;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -21,7 +23,11 @@ public class StudentControllerTest extends BasicWiremockTest {
 
     @Test
     public void getStudent() throws Exception {
-        this.mockMvc.perform(get("/student/profile/{username}", USERNAME))
+
+        Principal principal = () -> USERNAME;
+
+        this.mockMvc.perform(get("/student/profile/{username}", USERNAME)
+                .principal(principal))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));

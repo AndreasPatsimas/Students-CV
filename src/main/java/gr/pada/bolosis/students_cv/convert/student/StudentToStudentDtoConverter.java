@@ -6,6 +6,7 @@ import gr.pada.bolosis.students_cv.dto.CvDto;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 @Component
 public class StudentToStudentDtoConverter implements Converter<Student, StudentDto> {
@@ -29,7 +30,7 @@ public class StudentToStudentDtoConverter implements Converter<Student, StudentD
 
     private CvDto buildCv(Cv cv){
 
-        if (cv != null)
+        if (!ObjectUtils.isEmpty(cv))
             return CvDto.builder()
                     .fileName(cv.getFileName())
                     .fileDownloadUri(cv.getFileDownloadUri())

@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtUtil {
+public class JwtUtils {
 
-    private String SECRET_KEY = "aris1914";
+    private String SECRET_KEY = "tasos1997";
 
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);

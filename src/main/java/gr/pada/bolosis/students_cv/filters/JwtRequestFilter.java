@@ -1,7 +1,7 @@
 package gr.pada.bolosis.students_cv.filters;
 
 import gr.pada.bolosis.students_cv.services.MyUserDetailsService;
-import gr.pada.bolosis.students_cv.utils.JwtUtil;
+import gr.pada.bolosis.students_cv.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +23,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     MyUserDetailsService userDetailsService;
 
     @Autowired
-    JwtUtil jwtUtil;
+    JwtUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -35,11 +35,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Aris ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Tasos ")) {
 
-            jwt = authorizationHeader.substring(5);
+            jwt = authorizationHeader.substring(6);
 
-            username = jwtUtil.extractUsername(jwt);
+            username = jwtUtils.extractUsername(jwt);
 
         }
 
@@ -47,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if(jwtUtil.validateToken(jwt, userDetails)){
+            if(jwtUtils.validateToken(jwt, userDetails)){
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

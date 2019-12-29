@@ -7,7 +7,7 @@ import gr.pada.bolosis.students_cv.dto.authenticate.*;
 import gr.pada.bolosis.students_cv.enums.*;
 import gr.pada.bolosis.students_cv.exceptions.authentication.AuthenticationFailedException;
 import gr.pada.bolosis.students_cv.repositories.*;
-import gr.pada.bolosis.students_cv.utils.JwtUtil;
+import gr.pada.bolosis.students_cv.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private MyUserDetailsService userDetailsService;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private MailService mailService;
@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
-        final String jwt = jwtUtil.generateToken(userDetails);
+        final String jwt = jwtUtils.generateToken(userDetails);
 
         log.info("Authentication processs completed");
 
