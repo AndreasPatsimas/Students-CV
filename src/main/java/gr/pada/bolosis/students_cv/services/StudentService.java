@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 public interface StudentService {
 
     StudentDto getStudentByUsername(String username);
+
+    void saveStudentSettings(StudentDto studentDto);
 }

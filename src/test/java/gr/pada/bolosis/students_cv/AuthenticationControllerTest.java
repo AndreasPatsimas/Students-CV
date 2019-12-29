@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.security.Principal;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -67,6 +69,8 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
     @Test
     public void changePasswordSuccess() throws Exception {
 
+        Principal principal = () -> USERNAME;
+
         ChangePasswordRequest changePasswordRequest = ChangePasswordRequest.builder()
                 .username(USERNAME)
                 .oldPassword(PASSWORD)
@@ -76,7 +80,8 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
         this.mockMvc.perform(
                 post(CONTEXT_PATH + "/authenticate/changePassword").contextPath(CONTEXT_PATH)
                         .content(asJsonString(changePasswordRequest))
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .principal(principal))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));

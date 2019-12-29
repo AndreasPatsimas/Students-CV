@@ -31,6 +31,35 @@ public class StudentServiceImpl implements StudentService {
 
         log.info("Fetch student with username: {} process begins", username);
 
+        Optional<Student> student = findStudentByUsername(username);
+
+        log.info("Fetch student process completed");
+
+        return conversionService.convert(student.get(), StudentDto.class);
+    }
+
+    @Override
+    public void saveStudentSettings(StudentDto studentDto) {
+
+        log.info("Save student settings with username: {} process begins", studentDto.getUsername());
+
+        Optional<Student> studentOptional = findStudentByUsername(studentDto.getUsername());
+
+        studentOptional.ifPresent(student -> {
+
+            student.setEmail(studentDto.getEmail());
+            student.setDescription(studentDto.getDescription());
+            student.setMobilePhone(studentDto.getMobilePhone());
+            student.setWorkExperience(studentDto.isWorkExperience() == true ? (short) 1 : (short) 0);
+
+            studentRepository.save(student);
+
+            log.info("Save student settings process comleted");
+        });
+    }
+
+    private Optional<Student> findStudentByUsername(String username){
+
         Optional<User> user = userRepository.findByUsername(username);
 
         if(user.isPresent()){
@@ -39,9 +68,7 @@ public class StudentServiceImpl implements StudentService {
 
             if(student.isPresent()){
 
-                log.info("Fetch student process completed");
-
-                return conversionService.convert(student.get(), StudentDto.class);
+                return student;
             }
         }
 

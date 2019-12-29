@@ -1,16 +1,13 @@
 package gr.pada.bolosis.students_cv.controllers;
 
-import gr.pada.bolosis.students_cv.dto.StudentDto;
 import gr.pada.bolosis.students_cv.exceptions.authorization.AuthorizationErrorResponse;
 import gr.pada.bolosis.students_cv.exceptions.authorization.AuthorizationFailedException;
-import gr.pada.bolosis.students_cv.services.StudentService;
+import gr.pada.bolosis.students_cv.services.UserService;
 import gr.pada.bolosis.students_cv.utils.AuthorizeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -18,33 +15,23 @@ import java.security.Principal;
 @CrossOrigin("http://127.0.0.1:5501")
 @RestController
 @Slf4j
-@RequestMapping(value = "/student")
-public class StudentController {
+@RequestMapping(value = "/user")
+public class UserController {
 
     @Autowired
-    StudentService studentService;
+    UserService userService;
 
-    @GetMapping(value = "/profile/{username}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public StudentDto getStudent(@PathVariable("username") String username, Principal principal) throws Exception {
+    @DeleteMapping(value = "/delete/profile/{username}")
+    public ResponseEntity<?> deleteUserProfile(@PathVariable("username") String username, Principal principal)
+            throws Exception {
 
-        log.info("Fetch student with username: {} ", username);
+        log.info("Delete profile for user {}", username);
 
         AuthorizeUtils.authorizeRequest(username, principal);
 
-        return studentService.getStudentByUsername(username);
-    }
+        userService.deleteUser(username);
 
-    @PutMapping(value = "/settings", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> saveStudentSettings(@RequestBody StudentDto studentDto,
-                                                 Principal principal) throws Exception{
-
-        log.info("Save settings of student {}", studentDto.getUsername());
-
-        AuthorizeUtils.authorizeRequest(studentDto.getUsername(), principal);
-
-        studentService.saveStudentSettings(studentDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("SAVED");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)

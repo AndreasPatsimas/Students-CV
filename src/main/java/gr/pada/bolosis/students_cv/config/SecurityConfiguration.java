@@ -34,9 +34,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/register/*", "/authenticate", "/authenticate/*").permitAll()
-                .antMatchers("/student/*").hasRole("STUDENT").anyRequest().authenticated()
-                //.antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/", "/register/*", "/authenticate", "/authenticate/forgotPassword").permitAll()
+                .antMatchers("/student/*").hasRole("STUDENT")
+                .antMatchers("/authenticate/changePassword", "/user/*").hasAnyRole("STUDENT", "COMPANY")
+                .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // not creating a session
 

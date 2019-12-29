@@ -4,10 +4,13 @@ import gr.pada.bolosis.students_cv.dto.authenticate.*;
 import gr.pada.bolosis.students_cv.enums.AuthenticationStatus;
 import gr.pada.bolosis.students_cv.exceptions.authentication.*;
 import gr.pada.bolosis.students_cv.services.AuthenticationService;
+import gr.pada.bolosis.students_cv.utils.AuthorizeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @CrossOrigin("http://127.0.0.1:5501")
 @RestController
@@ -29,8 +32,12 @@ public class AuthenticationController {
 
     @PostMapping(value = "/changePassword", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ChangePasswordResponse changePassword(@RequestBody ChangePasswordRequest request) throws Exception {
+    public ChangePasswordResponse changePassword(@RequestBody ChangePasswordRequest request, Principal principal)
+            throws Exception {
+
         log.info("Change password process started for user {}", request.getUsername());
+
+        AuthorizeUtils.authorizeRequest(request.getUsername(), principal);
 
         return authenticationService.changePassword(request);
     }
@@ -38,6 +45,7 @@ public class AuthenticationController {
     @PostMapping(value = "/forgotPassword", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ForgotPasswordResponse forgotPassword(@RequestBody ForgotPasswordRequest request) throws Exception {
+
         log.info("Forgot password process started fo user{} ", request.getUsername());
 
         return authenticationService.forgotPassword(request);
@@ -55,4 +63,5 @@ public class AuthenticationController {
 
         return new ResponseEntity<AuthenticationErrorResponse>(authenticationErrorResponse, HttpStatus.NOT_ACCEPTABLE);
     }
+
 }

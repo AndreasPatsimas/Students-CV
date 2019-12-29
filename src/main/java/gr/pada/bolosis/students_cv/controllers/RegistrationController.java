@@ -2,7 +2,6 @@ package gr.pada.bolosis.students_cv.controllers;
 
 import gr.pada.bolosis.students_cv.dto.CompanyDto;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
-import gr.pada.bolosis.students_cv.dto.UserDto;
 import gr.pada.bolosis.students_cv.exceptions.registration.RegistrationErrorResponse;
 import gr.pada.bolosis.students_cv.exceptions.registration.RegistrationFailedException;
 import gr.pada.bolosis.students_cv.services.RegistrationService;
