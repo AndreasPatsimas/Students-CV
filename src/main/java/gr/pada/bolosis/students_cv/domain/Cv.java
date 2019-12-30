@@ -40,7 +40,7 @@ public class Cv {
     private Instant timeInsert;
 
     @NotNull
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "student_id")
     private Student student;
 }

@@ -1,15 +1,20 @@
 package gr.pada.bolosis.students_cv.services;
 
+import gr.pada.bolosis.students_cv.domain.Cv;
 import gr.pada.bolosis.students_cv.domain.Student;
 import gr.pada.bolosis.students_cv.domain.User;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
+import gr.pada.bolosis.students_cv.repositories.CvRepository;
 import gr.pada.bolosis.students_cv.repositories.StudentRepository;
 import gr.pada.bolosis.students_cv.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -22,6 +27,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CvRepository cvRepository;
+
+    @Autowired
+    CvService cvService;
 
     @Autowired
     ConversionService conversionService;
@@ -56,6 +67,32 @@ public class StudentServiceImpl implements StudentService {
 
             log.info("Save student settings process comleted");
         });
+    }
+
+    @Override
+    public void uploadStudentCv(MultipartFile file, String username) {
+
+        Cv cv = conversionService.convert(cvService.uploadCv(file, username), Cv.class);
+
+        Optional<Student> studentOptional = findStudentByUsername(username);
+
+        studentOptional.ifPresent(student -> {
+
+            cv.setStudent(student);
+
+            cvRepository.deleteCvByStudentId(student.getId());
+
+            cvRepository.save(cv);
+
+            log.info("Upload file process completed for user {}", username);
+        });
+
+    }
+
+    @Override
+    public Resource downloadStudentCvAsResource(String username, String fileName) {
+
+        return cvService.loadCvAsResource(username, fileName);
     }
 
     private Optional<Student> findStudentByUsername(String username){

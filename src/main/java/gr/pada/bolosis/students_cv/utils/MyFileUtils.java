@@ -86,4 +86,17 @@ public class MyFileUtils {
             e.printStackTrace();
         }
     }
+
+    public static void emptyDirectory(File file){
+        if (file.isDirectory()) {
+
+            if (file.list().length != 0) {
+
+                for (String temp : file.list()) {
+
+                    deleteFile(new File(file.getAbsolutePath() + "/" + temp));
+                }
+            }
+        }
+    }
 }

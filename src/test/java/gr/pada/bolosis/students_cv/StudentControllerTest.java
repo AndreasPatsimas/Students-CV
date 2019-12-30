@@ -5,8 +5,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.security.Principal;
 
@@ -29,6 +31,10 @@ public class StudentControllerTest extends BasicWiremockTest {
     private static final Long MOBILE_PHONE = 6986803782L;
 
     private static final boolean WORK_EXPERIENCE = true;
+
+    private static final String UPLOAD_FILE_NAME = "erg.txt";
+
+    private static final String DOWNLOAD_FILE_NAME = "erg.txt";
 
     private static final Principal principal = () -> USERNAME;
 
@@ -61,5 +67,30 @@ public class StudentControllerTest extends BasicWiremockTest {
                 .principal(principal))
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void uploadStudentCv() throws Exception {
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", UPLOAD_FILE_NAME,
+                "multipart/form-data", is);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/student/uploadFile/{username}", USERNAME)
+                .file(mockMultipartFile).contentType(MediaType.MULTIPART_FORM_DATA)
+                .principal(principal))
+                .andDo(print())
+                .andExpect(status().isAccepted()).andReturn();
+    }
+
+    @Test
+    public void downloadStudentCv() throws Exception {
+
+        this.mockMvc.perform(
+                get(CONTEXT_PATH + "/student/downloadFile/{username}/{fileName:.+}", USERNAME, DOWNLOAD_FILE_NAME)
+                        .contextPath(CONTEXT_PATH)
+                .principal(principal))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.TEXT_PLAIN_VALUE));
     }
 }

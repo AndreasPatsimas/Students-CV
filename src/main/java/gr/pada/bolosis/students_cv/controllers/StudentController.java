@@ -7,12 +7,16 @@ import gr.pada.bolosis.students_cv.services.StudentService;
 import gr.pada.bolosis.students_cv.utils.AuthorizeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
 
 @CrossOrigin("http://127.0.0.1:5501")
@@ -45,6 +49,52 @@ public class StudentController {
         studentService.saveStudentSettings(studentDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("SAVED");
+    }
+
+    @PostMapping("/uploadFile/{username}")
+    public ResponseEntity<?> uploadStudentCv(@RequestParam("file") MultipartFile file,
+                                             @PathVariable("username") String username, Principal principal) {
+
+        log.info("Upload file for user {}", username);
+
+        AuthorizeUtils.authorizeRequest(username, principal);
+
+        studentService.uploadStudentCv(file, username);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("UPLOADED");
+    }
+
+    @GetMapping("/downloadFile/{username}/{fileName:.+}")
+    public ResponseEntity<Resource> downloadStudentCv(@PathVariable("username") String username,
+                                                      @PathVariable String fileName,
+                                                      HttpServletRequest request, Principal principal) {
+
+        log.info("Download cv of user {}", username);
+
+        AuthorizeUtils.authorizeRequest(username, principal);
+
+        Resource resource = studentService.downloadStudentCvAsResource(username, fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType(request, resource)))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+    private String contentType(HttpServletRequest request, Resource resource){
+
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            log.info("Could not determine file type.");
+        }
+
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return contentType;
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)

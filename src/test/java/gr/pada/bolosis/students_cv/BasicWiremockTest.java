@@ -2,8 +2,11 @@ package gr.pada.bolosis.students_cv;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import gr.pada.bolosis.students_cv.controllers.StudentController;
 import org.junit.Before;
 import org.junit.Rule;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.restdocs.JUnitRestDocumentation;
@@ -13,6 +16,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.io.InputStream;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -43,6 +48,12 @@ public class BasicWiremockTest {
     @Value("${server.servlet.context-path}")
     protected String CONTEXT_PATH;
 
+    protected InputStream is;
+
+    @Spy
+    @InjectMocks
+    private StudentController controller = new StudentController();
+
     @Before
     public void setUp() {
         this.mockMvc =
@@ -55,6 +66,8 @@ public class BasicWiremockTest {
                         .alwaysDo(document("{class-name}/{method-name}",
                                 preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                         .build();
+
+        is = controller.getClass().getClassLoader().getResourceAsStream("");
     }
 
     protected static String asJsonString(final Object obj) {

@@ -16,31 +16,32 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(properties = {"spring.application.name=RegistrationControllerTest",
         "spring.jmx.default-domain=RegistrationControllerTest"})
 public class RegistrationControllerTest extends BasicWiremockTest {
 
     //Student credits
-    private static final String USERNAME = "andriana";
+    private static final String USERNAME = "sotiris";
 
-    private static final String PASSWORD = "anyfi";
+    private static final String PASSWORD = "fenomeno";
 
-    private static final String EMAIL = "andri@gmail.com";
+    private static final String EMAIL = "sotirinio@hotmail.com";
 
-    private static final String FIRSTNAME = "Andriana";
+    private static final String FIRSTNAME = "Sotiris";
 
-    private static final String LASTNAME = "Bolosi";
+    private static final String LASTNAME = "Patsimas";
 
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
-    private static String date = "1991-07-17";
+    private static String date = "1997-05-08";
     private static final LocalDate DOB = LocalDate.parse(date,  formatter);
 
     private static final Long MOBILE_PHONE = 6978327820L;
 
     private static final short DEPARTMENT = (short)3;
 
-    private static final boolean WORK_EXPERIENCE = false;
+    private static final boolean WORK_EXPERIENCE = true;
 
     //company credits
     private static final String USERNAME_COMPANY = "icap";
@@ -51,7 +52,6 @@ public class RegistrationControllerTest extends BasicWiremockTest {
 
     private static final String COMPANY_NAME = "ICAP AE";
 
-    @Ignore
     @Test
     public void createStudent() throws Exception {
 
@@ -75,7 +75,6 @@ public class RegistrationControllerTest extends BasicWiremockTest {
                 .andExpect(status().isCreated());
     }
 
-    @Ignore
     @Test
     public void createCompany() throws Exception {
 

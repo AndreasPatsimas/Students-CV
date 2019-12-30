@@ -6,6 +6,8 @@ import gr.pada.bolosis.students_cv.repositories.UserRepository;
 import gr.pada.bolosis.students_cv.utils.MyFileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -14,10 +16,17 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@PropertySource({ "classpath:application.properties" })
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Value("${cv.path}")
+    private String cvPath;
+
+    @Value("${image.path}")
+    private String imagePath;
 
     @Override
     public void deleteUser(String username) throws IOException {
@@ -28,10 +37,14 @@ public class UserServiceImpl implements UserService {
 
         if(user.isPresent()){
 
-            System.out.println(user.get().getAuthorities().get(0).getDescription());
+            if(user.get().getAuthorities().get(0).getDescription().equals(AuthorityType.ROLE_STUDENT.description())){
 
-            if(user.get().getAuthorities().get(0).getDescription().equals(AuthorityType.ROLE_STUDENT.description()))
-                MyFileUtils.deleteDirectory(new File("C:/Student-CV/students/" + username));
+                MyFileUtils.deleteDirectory(new File(cvPath + username));
+
+                MyFileUtils.deleteDirectory(new File(imagePath + "students/" + username));
+            }
+            else if(user.get().getAuthorities().get(0).getDescription().equals(AuthorityType.ROLE_COMPANY.description()))
+                MyFileUtils.deleteDirectory(new File(imagePath + "companies/" + username));
 
             userRepository.deleteById(user.get().getId());
 

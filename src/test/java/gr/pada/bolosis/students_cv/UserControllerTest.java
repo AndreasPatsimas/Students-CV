@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.jmx.default-domain=UserControllerTest"})
 public class UserControllerTest extends BasicWiremockTest {
 
-    private static final String USERNAME = "billy";
+    private static final String USERNAME = "sotiris";
 
     private static final Principal principal = () -> USERNAME;
 
