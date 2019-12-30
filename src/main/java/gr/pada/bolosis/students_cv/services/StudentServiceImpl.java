@@ -7,19 +7,23 @@ import gr.pada.bolosis.students_cv.dto.StudentDto;
 import gr.pada.bolosis.students_cv.repositories.CvRepository;
 import gr.pada.bolosis.students_cv.repositories.StudentRepository;
 import gr.pada.bolosis.students_cv.repositories.UserRepository;
+import gr.pada.bolosis.students_cv.utils.MyFileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Optional;
 
 @Service
 @Slf4j
+@PropertySource({ "classpath:application.properties" })
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
@@ -36,6 +40,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     ConversionService conversionService;
+
+    @Value("${image.path}")
+    private String imagePath;
 
     @Override
     public StudentDto getStudentByUsername(String username) {
@@ -93,6 +100,27 @@ public class StudentServiceImpl implements StudentService {
     public Resource downloadStudentCvAsResource(String username, String fileName) {
 
         return cvService.loadCvAsResource(username, fileName);
+    }
+
+    @Override
+    public void saveStudentImage(MultipartFile file, String username) {
+
+        log.info("Upload image {} process begins", file.getOriginalFilename());
+
+        Optional<Student> studentOptional = findStudentByUsername(username);
+
+        studentOptional.ifPresent(student -> {
+
+            MyFileUtils.emptyDirectory(new File(imagePath + "students/" + username));
+
+            MyFileUtils.storeFile(file, imagePath + "students/", username);
+
+            student.setImagePath(file.getOriginalFilename());
+
+            studentRepository.save(student);
+
+            log.info("Upload image process completed");
+        });
     }
 
     private Optional<Student> findStudentByUsername(String username){

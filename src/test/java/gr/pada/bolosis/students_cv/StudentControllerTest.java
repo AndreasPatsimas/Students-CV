@@ -34,6 +34,8 @@ public class StudentControllerTest extends BasicWiremockTest {
 
     private static final String UPLOAD_FILE_NAME = "erg.txt";
 
+    private static final String SAVE_IMAGE_NAME = "sotiris.jpg";
+
     private static final String DOWNLOAD_FILE_NAME = "erg.txt";
 
     private static final Principal principal = () -> USERNAME;
@@ -92,5 +94,19 @@ public class StudentControllerTest extends BasicWiremockTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.TEXT_PLAIN_VALUE));
+    }
+
+    @Ignore
+    @Test
+    public void saveStudentImage() throws Exception {
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", SAVE_IMAGE_NAME,
+                "multipart/form-data", is);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/student/saveImage/{username}", USERNAME)
+                .file(mockMultipartFile).contentType(MediaType.MULTIPART_FORM_DATA)
+                .principal(principal))
+                .andDo(print())
+                .andExpect(status().isAccepted()).andReturn();
     }
 }

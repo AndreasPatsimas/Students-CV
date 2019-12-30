@@ -81,6 +81,19 @@ public class StudentController {
                 .body(resource);
     }
 
+    @PostMapping("/saveImage/{username}")
+    public ResponseEntity<?> saveStudentImage(@RequestParam("file") MultipartFile file,
+                                             @PathVariable("username") String username, Principal principal) {
+
+        log.info("Upload file for user {}", username);
+
+        AuthorizeUtils.authorizeRequest(username, principal);
+
+        studentService.saveStudentImage(file, username);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("UPLOADED");
+    }
+
     private String contentType(HttpServletRequest request, Resource resource){
 
         String contentType = null;

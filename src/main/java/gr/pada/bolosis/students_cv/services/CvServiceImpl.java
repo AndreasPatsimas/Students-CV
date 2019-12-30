@@ -32,18 +32,19 @@ public class CvServiceImpl implements CvService {
 
     @Override
     public CvDto uploadCv(MultipartFile file, String username) {
-        log.info("Upload file {} process begins", file.getOriginalFilename());
+
+        log.info("Upload cv {} process begins", file.getOriginalFilename());
 
         MyFileUtils.emptyDirectory(new File(cvPath + username));
 
-        String fileName = storeFile(file, username);
+        String fileName = MyFileUtils.storeFile(file, cvPath, username);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
 
-        log.info("Upload file process completed");
+        log.info("Upload cv process completed");
 
         return CvDto.builder()
                 .fileName(fileName)
@@ -81,31 +82,31 @@ public class CvServiceImpl implements CvService {
         }
     }
 
-    private String storeFile(MultipartFile file, String username) {
-
-        Path fileStorageLocation = Paths.get(cvPath + username)
-                .toAbsolutePath().normalize();
-
-        try {
-            Files.createDirectories(fileStorageLocation);
-        } catch (Exception ex) {
-            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
-        }
-
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-        try {
-
-            if(fileName.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
-            }
-
-            Path targetLocation = fileStorageLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-            return fileName;
-        } catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
-        }
-    }
+//    private String storeFile(MultipartFile file, String username) {
+//
+//        Path fileStorageLocation = Paths.get(cvPath + username)
+//                .toAbsolutePath().normalize();
+//
+//        try {
+//            Files.createDirectories(fileStorageLocation);
+//        } catch (Exception ex) {
+//            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+//        }
+//
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//
+//        try {
+//
+//            if(fileName.contains("..")) {
+//                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+//            }
+//
+//            Path targetLocation = fileStorageLocation.resolve(fileName);
+//            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+//
+//            return fileName;
+//        } catch (IOException ex) {
+//            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+//        }
+//    }
 }

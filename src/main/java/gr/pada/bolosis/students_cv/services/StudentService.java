@@ -15,4 +15,6 @@ public interface StudentService {
     void uploadStudentCv(MultipartFile file, String username);
 
     Resource downloadStudentCvAsResource(String username, String fileName);
+
+    void saveStudentImage(MultipartFile file, String username);
 }

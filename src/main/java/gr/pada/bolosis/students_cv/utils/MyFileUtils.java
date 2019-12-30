@@ -1,9 +1,16 @@
 package gr.pada.bolosis.students_cv.utils;
 
+import gr.pada.bolosis.students_cv.exceptions.files.FileStorageException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class MyFileUtils {
@@ -97,6 +104,34 @@ public class MyFileUtils {
                     deleteFile(new File(file.getAbsolutePath() + "/" + temp));
                 }
             }
+        }
+    }
+
+    public static String storeFile(MultipartFile file, String dir, String username) {
+
+        Path fileStorageLocation = Paths.get(dir + username)
+                .toAbsolutePath().normalize();
+
+        try {
+            Files.createDirectories(fileStorageLocation);
+        } catch (Exception ex) {
+            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        try {
+
+            if(fileName.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+            }
+
+            Path targetLocation = fileStorageLocation.resolve(fileName);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            return fileName;
+        } catch (IOException ex) {
+            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
 }
