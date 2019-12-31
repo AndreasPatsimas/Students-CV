@@ -78,7 +78,7 @@ public class StudentControllerTest extends BasicWiremockTest {
     @Test
     public void uploadStudentCv() throws Exception {
 
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", UPLOAD_FILE_NAME_1,
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", UPLOAD_FILE_NAME,
                 "multipart/form-data", is);
 
         this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/student/uploadFile/{username}", USERNAME)
@@ -92,7 +92,7 @@ public class StudentControllerTest extends BasicWiremockTest {
     public void downloadStudentCv() throws Exception {
 
         this.mockMvc.perform(
-                get(CONTEXT_PATH + "/student/downloadFile/{username}/{fileName:.+}", USERNAME, DOWNLOAD_FILE_NAME_1)
+                get(CONTEXT_PATH + "/student/downloadFile/{username}/{fileName:.+}", USERNAME, DOWNLOAD_FILE_NAME)
                         .contextPath(CONTEXT_PATH)
                 .principal(principal))
                 .andDo(print())
