@@ -37,9 +37,7 @@ public class StudentController {
 
         return studentService.getStudentByUsername(username);
     }
-//https://howtodoinjava.com/spring-restful/http-options-request-handler/
-//https://stackoverflow.com/questions/45347718/spring-restful-handling-options-request
-//https://www.google.com/search?sxsrf=ACYBGNTxsRcNOvrJVC76mxT47wtS_jDUbg%3A1577741465485&source=hp&ei=mWwKXsPFG9rBmwWluZGwDQ&q=request+method+options+and+rest+api+call+with+spring&oq=request+method+options+and+rest+api+call+with+sp&gs_l=psy-ab.3.1.33i160l3.6045.31640..32862...25.0..0.198.8389.0j54....2..0....1..gws-wiz.....10..35i362i39j0i131j0i322i131j0i322j0j0i22i30j0i22i10i30j33i22i29i30j35i39i19j35i39j0i10j0i19j0i22i30i19j33i21.Rhc3tJrPfXE
+
     @PutMapping(value = "/settings", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> saveStudentSettings(@RequestBody StudentDto studentDto,
                                                  Principal principal) throws Exception{
