@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-@CrossOrigin("http://127.0.0.1:5501")
+@CrossOrigin("*")
 @RestController
 @Slf4j
 @RequestMapping(value = "/user")
