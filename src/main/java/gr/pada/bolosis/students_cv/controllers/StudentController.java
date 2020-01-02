@@ -1,5 +1,6 @@
 package gr.pada.bolosis.students_cv.controllers;
 
+import gr.pada.bolosis.students_cv.dto.CvDto;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
 import gr.pada.bolosis.students_cv.exceptions.authorization.AuthorizationErrorResponse;
 import gr.pada.bolosis.students_cv.exceptions.authorization.AuthorizationFailedException;
@@ -59,9 +60,9 @@ public class StudentController {
 
         AuthorizeUtils.authorizeRequest(username, principal);
 
-        studentService.uploadStudentCv(file, username);
+        CvDto cv = studentService.uploadStudentCv(file, username);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("UPLOADED");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(cv);
     }
 
     @GetMapping("/downloadFile/{username}/{fileName:.+}")

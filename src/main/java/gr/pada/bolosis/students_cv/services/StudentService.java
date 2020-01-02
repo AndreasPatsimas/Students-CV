@@ -1,5 +1,6 @@
 package gr.pada.bolosis.students_cv.services;
 
+import gr.pada.bolosis.students_cv.dto.CvDto;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public interface StudentService {
 
     void saveStudentSettings(StudentDto studentDto);
 
-    void uploadStudentCv(MultipartFile file, String username);
+    CvDto uploadStudentCv(MultipartFile file, String username);
 
     Resource downloadStudentCvAsResource(String username, String fileName);
 

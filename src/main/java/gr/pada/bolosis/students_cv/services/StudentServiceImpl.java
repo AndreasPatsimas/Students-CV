@@ -3,6 +3,7 @@ package gr.pada.bolosis.students_cv.services;
 import gr.pada.bolosis.students_cv.domain.Cv;
 import gr.pada.bolosis.students_cv.domain.Student;
 import gr.pada.bolosis.students_cv.domain.User;
+import gr.pada.bolosis.students_cv.dto.CvDto;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
 import gr.pada.bolosis.students_cv.repositories.CvRepository;
 import gr.pada.bolosis.students_cv.repositories.StudentRepository;
@@ -77,9 +78,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void uploadStudentCv(MultipartFile file, String username) {
+    public CvDto uploadStudentCv(MultipartFile file, String username) {
 
-        Cv cv = conversionService.convert(cvService.uploadCv(file, username), Cv.class);
+        CvDto cvDto = cvService.uploadCv(file, username);
+
+        Cv cv = conversionService.convert(cvDto, Cv.class);
 
         Optional<Student> studentOptional = findStudentByUsername(username);
 
@@ -94,6 +97,7 @@ public class StudentServiceImpl implements StudentService {
             log.info("Upload file process completed for user {}", username);
         });
 
+        return cvDto;
     }
 
     @Override
