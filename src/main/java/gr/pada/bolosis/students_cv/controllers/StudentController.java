@@ -49,7 +49,7 @@ public class StudentController {
 
         studentService.saveStudentSettings(studentDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("SAVED");
+        return ResponseEntity.status(HttpStatus.CREATED).body(HttpStatus.CREATED);
     }
 
     @PostMapping("/uploadFile/{username}")
