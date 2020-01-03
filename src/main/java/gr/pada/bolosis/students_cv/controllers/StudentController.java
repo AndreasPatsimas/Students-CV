@@ -92,7 +92,7 @@ public class StudentController {
 
         studentService.saveStudentImage(file, username);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("UPLOADED");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(HttpStatus.ACCEPTED);
     }
 
     private String contentType(HttpServletRequest request, Resource resource){
