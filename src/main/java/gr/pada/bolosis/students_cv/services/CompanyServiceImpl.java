@@ -7,7 +7,6 @@ import gr.pada.bolosis.students_cv.dto.CompanyDto;
 import gr.pada.bolosis.students_cv.dto.StudentDto;
 import gr.pada.bolosis.students_cv.enums.Department;
 import gr.pada.bolosis.students_cv.repositories.CompanyRepository;
-import gr.pada.bolosis.students_cv.repositories.CvRepository;
 import gr.pada.bolosis.students_cv.repositories.StudentRepository;
 import gr.pada.bolosis.students_cv.repositories.UserRepository;
 import gr.pada.bolosis.students_cv.utils.MyFileUtils;
