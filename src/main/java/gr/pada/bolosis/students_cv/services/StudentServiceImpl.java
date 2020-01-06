@@ -141,7 +141,7 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
-        user.orElseThrow(() -> new UsernameNotFoundException("Not found " + username));
+        user.orElseThrow(() -> new UsernameNotFoundException("Not found student with username " + username));
 
         return null;
     }
