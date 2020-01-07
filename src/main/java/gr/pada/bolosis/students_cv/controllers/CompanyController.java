@@ -102,7 +102,7 @@ public class CompanyController {
 
         AuthorizeUtils.authorizeRequest(username, principal);
 
-        Resource resource = companyService.downloadStudentCvByCompany(units, studentUsername, fileName);
+        Resource resource = companyService.downloadStudentCvByCompany(username, units, studentUsername, fileName);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType(request, resource)))

@@ -104,7 +104,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         log.info("Search students in department {} process begins", Department.fromValue(department));
 
-        List<Student> students = studentRepository.findStudentByDepartmentAndWorkExperience(department,
+        List<Student> students = studentRepository.findStudentByDepartmentAndWorkExperienceOrderByLastname(department,
                 workExperience == true ? (short) 1 : (short) 0);
 
         List<StudentDto> studentDtos = new ArrayList<>(students.size());
@@ -132,10 +132,25 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Resource downloadStudentCvByCompany(Long units, String studentUsername, String fileName) {
+    public Resource downloadStudentCvByCompany(String username, Long units, String studentUsername, String fileName) {
 
-        if(units >= 1L)
+        if(units >= 1L){
+
+            Optional<Company> companyOptional = findCompanyByUsername(username);
+
+            companyOptional.ifPresent(company -> {
+
+                company.setUnits(units - 1);
+
+                companyRepository.save(company);
+            });
+
+            companyOptional.orElseThrow(() -> {
+                throw new RuntimeException("Company not found.");
+            });
+
             return studentService.downloadStudentCvAsResource(studentUsername, fileName);
+        }
         else
             throw new RuntimeException("No units to download a cv.");
     }

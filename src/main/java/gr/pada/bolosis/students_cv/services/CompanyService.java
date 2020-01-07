@@ -21,5 +21,5 @@ public interface CompanyService {
 
     StudentDto getStudentByEmail(String email);
 
-    Resource downloadStudentCvByCompany(Long units, String studentUsername, String fileName);
+    Resource downloadStudentCvByCompany(String username, Long units, String studentUsername, String fileName);
 }
