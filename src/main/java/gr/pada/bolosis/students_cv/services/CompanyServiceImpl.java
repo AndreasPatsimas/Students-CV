@@ -70,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService {
 
             company.setCompanyName(companyDto.getCompanyName());
             company.setEmail(companyDto.getEmail());
-            company.setUnits(companyDto.getUnits());
+            company.setUnits(company.getUnits() + companyDto.getUnits());
 
             companyRepository.save(company);
 
