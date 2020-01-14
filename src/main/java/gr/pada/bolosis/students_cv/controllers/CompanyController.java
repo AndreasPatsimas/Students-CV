@@ -91,10 +91,9 @@ public class CompanyController {
         return companyService.getStudentByEmail(email);
     }
 
-    @GetMapping("/downloadFile/{username}/{studentUsername}/{units}/{fileName:.+}")
+    @GetMapping("/downloadFile/{username}/{studentUsername}/{fileName:.+}")
     public ResponseEntity<Resource> downloadStudentCv(@PathVariable("username") String username,
                                                       @PathVariable("studentUsername") String studentUsername,
-                                                      @PathVariable("units") Long units,
                                                       @PathVariable String fileName,
                                                       HttpServletRequest request, Principal principal) {
 
@@ -102,7 +101,7 @@ public class CompanyController {
 
         AuthorizeUtils.authorizeRequest(username, principal);
 
-        Resource resource = companyService.downloadStudentCvByCompany(username, units, studentUsername, fileName);
+        Resource resource = companyService.downloadStudentCvByCompany(username, studentUsername, fileName);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType(request, resource)))

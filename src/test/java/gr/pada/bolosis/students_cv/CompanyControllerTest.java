@@ -112,8 +112,8 @@ public class CompanyControllerTest extends BasicWiremockTest {
     public void downloadStudentCv() throws Exception {
 
         this.mockMvc.perform(
-                get(CONTEXT_PATH + "/company/downloadFile/{username}/{studentUsername}/{units}/{fileName:.+}",
-                        USERNAME, STUDENT_USERNAME, UNITS, DOWNLOAD_FILE_NAME)
+                get(CONTEXT_PATH + "/company/downloadFile/{username}/{studentUsername}/{fileName:.+}",
+                        USERNAME, STUDENT_USERNAME, DOWNLOAD_FILE_NAME)
                         .contextPath(CONTEXT_PATH)
                         .principal(principal))
                 .andDo(print())

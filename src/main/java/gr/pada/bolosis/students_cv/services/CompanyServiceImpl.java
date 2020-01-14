@@ -132,27 +132,27 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Resource downloadStudentCvByCompany(String username, Long units, String studentUsername, String fileName) {
+    public Resource downloadStudentCvByCompany(String username, String studentUsername, String fileName) {
 
-        if(units >= 1L){
+        Optional<Company> companyOptional = findCompanyByUsername(username);
 
-            Optional<Company> companyOptional = findCompanyByUsername(username);
+        companyOptional.ifPresent(company -> {
 
-            companyOptional.ifPresent(company -> {
+            if(company.getUnits() >= 1){
 
-                company.setUnits(units - 1);
+                company.setUnits(company.getUnits() - 1);
 
                 companyRepository.save(company);
-            });
+            }
+            else
+                throw new RuntimeException("No units to download a cv.");
+        });
 
-            companyOptional.orElseThrow(() -> {
-                throw new RuntimeException("Company not found.");
-            });
+        companyOptional.orElseThrow(() -> {
+            throw new RuntimeException("Company not found.");
+        });
 
-            return studentService.downloadStudentCvAsResource(studentUsername, fileName);
-        }
-        else
-            throw new RuntimeException("No units to download a cv.");
+        return studentService.downloadStudentCvAsResource(studentUsername, fileName);
     }
 
     private Optional<Company> findCompanyByUsername(String username){
