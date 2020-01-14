@@ -59,7 +59,7 @@ CREATE TABLE `companies` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `usid_idx` (`user_id`),
   CONSTRAINT `usid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (7,'tasos@icap.gr','ICAP AE',NULL,NULL,47),(8,'tasos@agile.gr','Agile AE',NULL,NULL,49);
+INSERT INTO `companies` VALUES (7,'tasos@icap.gr','ICAP AE',90,'icap.jfif',47),(8,'tasos@agile.gr','Agile AE',NULL,NULL,49),(9,'tasos@cognity.gr','Cognity AE',NULL,NULL,52),(10,'tasos@google.gr','GOOGLE',NULL,NULL,55);
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,16 +81,16 @@ DROP TABLE IF EXISTS `cvs`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `cvs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `file_name` varchar(100) NOT NULL,
-  `file_download_uri` varchar(200) NOT NULL,
-  `file_type` varchar(45) NOT NULL,
+  `file_name` varchar(1500) NOT NULL,
+  `file_download_uri` varchar(10000) NOT NULL,
+  `file_type` varchar(1500) NOT NULL,
   `size` bigint(20) NOT NULL,
   `time_insert` datetime NOT NULL,
   `student_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `stid_idx` (`student_id`),
   CONSTRAINT `stid` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ CREATE TABLE `cvs` (
 
 LOCK TABLES `cvs` WRITE;
 /*!40000 ALTER TABLE `cvs` DISABLE KEYS */;
-INSERT INTO `cvs` VALUES (21,'erg.txt','http://172.16.3.157:8888/downloadFile/erg.txt','multipart/form-data',31,'2019-12-30 14:51:29',24);
+INSERT INTO `cvs` VALUES (42,'CV_Andrea_Comellini_light_version_v2 (1) (1).pdf','http://localhost:8080/pada/downloadFile/CV_Andrea_Comellini_light_version_v2%20(1)%20(1).pdf','application/pdf',298441,'2020-01-03 20:46:14',24),(43,'erg.txt','http://localhost:8080/pada/downloadFile/erg.txt','text/plain',1932,'2020-01-06 16:40:19',28),(44,'CV_Andrea_Comellini_light_version_v2 (1) (1) (1).pdf','http://localhost:8080/pada/downloadFile/CV_Andrea_Comellini_light_version_v2%20(1)%20(1)%20(1).pdf','application/pdf',298441,'2020-01-07 17:03:54',32);
 /*!40000 ALTER TABLE `cvs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `students` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `userId_idx` (`user_id`),
   CONSTRAINT `userId` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES (24,'sotirinio@hotmail.com','Sotiris','Patsimas',3,1,'1997-05-03','I am very good at football!!!',6986803782,'sotiris.jpg',48),(25,'billysdnlew@hotmail.com','Vasilis','Kamarados',2,1,'2019-12-04',NULL,6988762723,NULL,50);
+INSERT INTO `students` VALUES (24,'sotirinio@hotmail.com','Sotiris','Patsimas',1,0,'1997-04-04','I am very good at football !!! I love gym!',6936803783,'sotiris.jpg',48),(28,'billysdnlew@hotmail.com','Vasilis','Kamarados',1,0,'1993-01-13',NULL,6988762732,NULL,56),(29,'bolositsious@hotmail.com','Chris','Bolosis',1,0,'1991-01-08',NULL,6976974356,NULL,57),(30,'tasosbolosis@gmail.com','Tasos','Bolosis',1,0,'1997-01-13',NULL,6935677888,NULL,58),(31,'andri@hotmail.com','Andriana','Bolosi',1,1,'2007-01-21',NULL,6988114459,NULL,59),(32,'andreas-patsim@hotmail.com','Andreas','Patsimas',1,1,'1993-02-13','I love programming and analytical thinking!!!',6988116719,'andreas.jpg',60);
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,7 +154,7 @@ CREATE TABLE `users` (
   `time_insert` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +163,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'andreas','$2a$10$V59heakpW8TMFdfxYEkpa.niyJRGHhSLbXIF.or9rVOLq.Irze8zO',1,'2019-03-16 15:09:17'),(47,'icap','$2a$10$baIbigmX9WA8RLDzRhXTJOd8clSmCQr90.OC3gkvQW1XKWWE5hwuS',1,'2019-12-30 14:33:30'),(48,'sotiris','$2a$10$cGFDlSZMZl/5leTgVqAuAeLqBAgNQiFd6I0qGBiJNLfyB0sqZbmdK',1,'2019-12-30 14:33:31'),(49,'agile','$2a$10$f5oNaITmSuzYLokyFGiwPOaLEqtkFd0.imvk4H6kfR8Gro/dtPYN6',1,'2019-12-30 15:44:45'),(50,'billy','$2a$10$VxWn9PUVqL6fsXSYZv2tQu.x70KTROl4oSUuNSI0FId1aqRxyVxsy',1,'2019-12-30 21:36:06');
+INSERT INTO `users` VALUES (47,'icap','$2a$10$/6V78pmH6ZOrLujE4GZ0VOt5suYqE2dhPErxwl.d8dj3NBEz8IgOm',1,'2019-12-30 14:33:30'),(48,'sotiris','$2a$10$AsXrEddk44Tf5QQeI0f7mu.zoYyevSlrJr59UYugPGstp2EXsQeZ6',1,'2019-12-30 14:33:31'),(49,'agile','$2a$10$f5oNaITmSuzYLokyFGiwPOaLEqtkFd0.imvk4H6kfR8Gro/dtPYN6',1,'2019-12-30 15:44:45'),(52,'cognity','$2a$10$RDnxQikVpkUHAgVfypgkx.ySnAhrdQP/D09nbMJc0qquh/4qldfgq',1,'2019-12-31 15:46:22'),(55,'google','$2a$10$iBcjmsiNVOxrVthQ20oN8ujxTk.CnRyuJOYGEUfObqY5Iw0ZD8z7C',1,'2020-01-04 05:43:27'),(56,'billy','$2a$10$HM5GK228ZRh68wYWdXiioul09SYTEuNgmMlCxpu2eB3qz.F3aE5Bi',1,'2020-01-04 05:54:47'),(57,'chris','$2a$10$IOQF3bGpIwtZdbqMzgk88eFZjidPRpfLRXGEwur6.mjuy9JSf5Uti',1,'2020-01-04 05:55:47'),(58,'tasos','$2a$10$Hapj3d1VU6w686n.xlhEi.8ECvTy0xSCHsuUkUPSZHYlu.sKNYZ5G',1,'2020-01-04 05:56:40'),(59,'andriana','$2a$10$ZSi4e1HaRjWxG4k3uCD5IO/TXGHMK45BsEd7Sh7g7DOvYZpCa8kH.',1,'2020-01-04 05:57:55'),(60,'andreas3','$2a$10$la0GP.DldyomThwvXOw8nuHEt0TOnVThwRO71M7Cn5P4WS/7ixGTK',1,'2020-01-04 05:59:41');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +190,7 @@ CREATE TABLE `users_authorities` (
 
 LOCK TABLES `users_authorities` WRITE;
 /*!40000 ALTER TABLE `users_authorities` DISABLE KEYS */;
-INSERT INTO `users_authorities` VALUES (48,1),(50,1),(47,2),(49,2),(1,3);
+INSERT INTO `users_authorities` VALUES (48,1),(56,1),(57,1),(58,1),(59,1),(60,1),(47,2),(49,2),(52,2),(55,2);
 /*!40000 ALTER TABLE `users_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -203,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-30 23:39:33
+-- Dump completed on 2020-01-14 22:08:44
