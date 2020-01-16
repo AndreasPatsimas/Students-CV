@@ -3,8 +3,7 @@ package gr.pada.bolosis.students_cv.enums;
 public enum AuthorityType {
 
     ROLE_STUDENT(1, "ROLE_STUDENT"),
-    ROLE_COMPANY(2, "ROLE_COMPANY"),
-    ROLE_ADMIN(3, "ROLE_ADMIN");
+    ROLE_COMPANY(2, "ROLE_COMPANY");
 
     private final int code;
 
